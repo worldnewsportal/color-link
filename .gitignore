@@ -1,0 +1,6 @@
+node_modules/
+public/
+android/
+ios/
+.DS_Store
+*.log

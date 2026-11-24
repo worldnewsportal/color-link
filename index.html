@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#141026">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Color Link</title>
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/components.css">
+<link rel="stylesheet" href="styles/game.css">
+<link rel="icon" href="assets/images/icon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============================ MAIN MENU ============================ -->
+  <section class="screen" id="screen-menu" data-screen="menu">
+    <div class="menu-bg" aria-hidden="true">
+      <span class="orb orb-a"></span>
+      <span class="orb orb-b"></span>
+      <span class="orb orb-c"></span>
+      <span class="grid-lines"></span>
+    </div>
+
+    <header class="menu-top">
+      <div class="menu-lang">
+        <button class="icon-btn" id="btn-lang-toggle" aria-label="Language"><span id="lang-label">EN</span></button>
+      </div>
+      <button class="icon-btn" id="btn-theme-toggle" aria-label="Theme">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
+      </button>
+    </header>
+
+    <div class="menu-body">
+      <div class="logo-block">
+        <h1 class="logo"><span data-i18n="app.logo1">COLOR</span><span data-i18n="app.logo2">LINK</span></h1>
+        <p class="logo-sub" data-i18n="app.tagline">Connect every pair. Clear the board.</p>
+      </div>
+
+      <div class="menu-stats">
+        <div class="stat-pill">
+          <span class="stat-val" id="menu-level">1</span>
+          <span class="stat-cap" data-i18n="menu.level">Level</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-val" id="menu-completed">0</span>
+          <span class="stat-cap" data-i18n="menu.completed">Done</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-val" id="menu-progress">0%</span>
+          <span class="stat-cap" data-i18n="menu.progress">Progress</span>
+        </div>
+      </div>
+
+      <nav class="menu-actions">
+        <button class="btn btn-primary btn-lg" id="btn-play"><span data-i18n="menu.play">Play</span></button>
+        <button class="btn btn-ghost" id="btn-continue"><span data-i18n="menu.continue">Continue</span></button>
+        <div class="menu-row">
+          <button class="btn btn-soft" id="btn-levels"><span data-i18n="menu.levels">Levels</span></button>
+          <button class="btn btn-soft" id="btn-stats"><span data-i18n="menu.stats">Stats</span></button>
+        </div>
+        <div class="menu-row">
+          <button class="btn btn-soft" id="btn-settings"><span data-i18n="menu.settings">Settings</span></button>
+          <button class="btn btn-soft btn-icon" id="btn-sound-toggle" aria-pressed="true">
+            <svg viewBox="0 0 24 24" class="ico" id="ico-sound"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <footer class="menu-foot"><span data-i18n="app.version">Version 1.0.0</span></footer>
+  </section>
+
+  <!-- ========================== LEVEL SELECT =========================== -->
+  <section class="screen screen-scroll" id="screen-levels" data-screen="levels">
+    <header class="appbar">
+      <button class="icon-btn" data-nav="menu" aria-label="Back">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <h2 data-i18n="levels.title">Select Level</h2>
+      <div class="appbar-side"><span class="chip" id="levels-chip">0/30</span></div>
+    </header>
+    <div class="level-grid" id="level-grid"></div>
+  </section>
+
+  <!-- ============================ SETTINGS ============================ -->
+  <section class="screen screen-scroll" id="screen-settings" data-screen="settings">
+    <header class="appbar">
+      <button class="icon-btn" data-nav="menu" aria-label="Back">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <h2 data-i18n="settings.title">Settings</h2>
+      <div class="appbar-side"></div>
+    </header>
+
+    <div class="panel-group">
+      <h3 class="group-title" data-i18n="settings.audio">Audio</h3>
+      <div class="panel">
+        <div class="row"><span data-i18n="settings.sfx">Sound effects</span>
+          <button class="switch" id="sw-sfx" role="switch" aria-checked="true"><span class="knob"></span></button></div>
+        <div class="row"><span data-i18n="settings.music">Background music</span>
+          <button class="switch" id="sw-music" role="switch" aria-checked="false"><span class="knob"></span></button></div>
+        <div class="row"><span data-i18n="settings.vibrate">Vibration</span>
+          <button class="switch" id="sw-vibration" role="switch" aria-checked="true"><span class="knob"></span></button></div>
+      </div>
+
+      <h3 class="group-title" data-i18n="settings.languageGroup">Language</h3>
+      <div class="panel">
+        <div class="row"><span data-i18n="settings.language">Language</span>
+          <div class="seg" id="seg-lang">
+            <button class="seg-btn is-active" data-lang="en">English</button>
+            <button class="seg-btn" data-lang="ar">العربية</button>
+          </div></div>
+      </div>
+
+      <h3 class="group-title" data-i18n="settings.themeGroup">Theme</h3>
+      <div class="panel">
+        <div class="row"><span data-i18n="settings.theme">Theme</span>
+          <div class="seg" id="seg-theme">
+            <button class="seg-btn is-active" data-theme="light">Light</button>
+            <button class="seg-btn" data-theme="dark">Dark</button>
+          </div></div>
+      </div>
+
+      <h3 class="group-title" data-i18n="settings.danger">Danger zone</h3>
+      <div class="panel">
+        <div class="row"><span data-i18n="settings.reset">Reset progress</span>
+          <button class="btn btn-danger btn-sm" id="btn-reset" data-i18n="settings.resetAction">Reset</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== STATISTICS =========================== -->
+  <section class="screen screen-scroll" id="screen-stats" data-screen="stats">
+    <header class="appbar">
+      <button class="icon-btn" data-nav="menu" aria-label="Back">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <h2 data-i18n="stats.title">Statistics</h2>
+      <div class="appbar-side"></div>
+    </header>
+    <div class="panel-group">
+      <div class="panel">
+        <div class="row"><span data-i18n="stats.completed">Levels completed</span><b id="st-completed">0</b></div>
+        <div class="row"><span data-i18n="stats.playtime">Total playtime</span><b id="st-playtime">0m</b></div>
+        <div class="row"><span data-i18n="stats.best">Best level time</span><b id="st-best">—</b></div>
+        <div class="row"><span data-i18n="stats.hints">Hints used</span><b id="st-hints">0</b></div>
+        <div class="row"><span data-i18n="stats.runs">Runs</span><b id="st-runs">0</b></div>
+      </div>
+      <h3 class="group-title" data-i18n="stats.difficulty">By difficulty</h3>
+      <div class="panel" id="st-difficulty"></div>
+    </div>
+  </section>
+
+  <!-- =========================== GAMEPLAY ============================= -->
+  <section class="screen" id="screen-game" data-screen="game">
+    <header class="appbar game-bar">
+      <button class="icon-btn" data-nav="menu" aria-label="Back">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="game-title">
+        <span class="game-level" id="game-level">1</span>
+        <span class="game-name" id="game-name" data-i18n="game.level">Level</span>
+      </div>
+      <div class="game-tools">
+        <button class="icon-btn" id="btn-undo" aria-label="Undo">
+          <svg viewBox="0 0 24 24" class="ico"><path d="M9 14L4 9l5-5"/><path d="M4 9h9a6 6 0 0 1 0 12H8"/></svg>
+        </button>
+        <button class="icon-btn" id="btn-restart" aria-label="Restart">
+          <svg viewBox="0 0 24 24" class="ico"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg>
+        </button>
+        <button class="icon-btn hint-btn" id="btn-hint" aria-label="Hint">
+          <svg viewBox="0 0 24 24" class="ico"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.8 1 1.6 1 2.5h6c0-.9.4-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg>
+          <span class="badge" id="hint-count">3</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="board-wrap">
+      <canvas id="board"></canvas>
+    </div>
+
+    <footer class="game-foot">
+      <div class="pairs-legend" id="pairs-legend"></div>
+      <p class="game-tip" id="game-tip" data-i18n="game.tip">Drag from a dot to its twin.</p>
+    </footer>
+
+    <!-- level complete overlay -->
+    <div class="overlay" id="win-overlay" hidden>
+      <div class="overlay-card win-card">
+        <div class="burst" id="win-burst" aria-hidden="true"></div>
+        <h2 data-i18n="win.title">Level Complete!</h2>
+        <p class="win-time" id="win-time">00:00</p>
+        <div class="win-actions">
+          <button class="btn btn-soft" id="btn-win-replay" data-i18n="win.replay">Replay</button>
+          <button class="btn btn-soft" id="btn-win-levels" data-i18n="win.levels">Levels</button>
+          <button class="btn btn-primary" id="btn-win-next" data-i18n="win.next">Next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= DIALOGS ============================ -->
+  <div class="overlay" id="dialog-overlay" hidden>
+    <div class="overlay-card dialog-card">
+      <h3 id="dialog-title">Title</h3>
+      <p id="dialog-text">Text</p>
+      <div class="dialog-actions">
+        <button class="btn btn-soft" id="dialog-cancel">Cancel</button>
+        <button class="btn btn-primary" id="dialog-confirm">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
+</div>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

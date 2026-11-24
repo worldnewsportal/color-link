@@ -1,0 +1,24 @@
+{
+  "name": "color-link",
+  "version": "1.0.0",
+  "description": "Color Link - a mobile colour matching path puzzle (Phase 1).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes http-server . -p 5173 -c-1 --silent",
+    "serve": "npx --yes http-server . -p 5173 -c-1 --silent",
+    "build": "node tools/build.js",
+    "check": "node tools/check.js",
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "npm run build && npx cap sync android",
+    "cap:open": "npx cap open android",
+    "apk:build": "npm run cap:sync && cd android && ./gradlew assembleDebug"
+  },
+  "keywords": ["game", "puzzle", "html5", "canvas", "capacitor"],
+  "license": "MIT",
+  "devDependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  }
+}
