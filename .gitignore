@@ -4,3 +4,6 @@ android/
 ios/
 .DS_Store
 *.log
+
+# local helper (never committed)
+.git-askpass.sh
